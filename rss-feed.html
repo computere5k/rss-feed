@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>    
+      <title>RSS Feed</title>
+      <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+    <style>
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-weight: bold !important;
+      }
+    </style>
+  </head>
+  <body>
+<div class="container h-bold my-4">
+<h1>Sample RSS Feed</h1>
+<h2 id="feed-title">Feed Title</h2>
+
+<ul id="rss-content" class="list-unstyled"></ul>
+<p id="feed-button"></p>
+</div>
+<script>
+fetch("https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fpestadvisories.usu.edu%2Ffeed%2F")
+	.then((response) => response.json())
+	.then((data) => {
+var i;
+var feedItem = "";
+for (i = 0; i < 10; i++)
+{   
+    var dateOptions = {year: 'numeric', month: 'long', day: 'numeric',};
+    var toDate = new Date (data.items[i].pubDate);
+    var dateConverter = toDate.toLocaleDateString('en-US', dateOptions);
+
+    feedItem += "<div class='row mb-5 mb-lg-4'><div class='col-lg-4 mb-2 mb-lg-0 align-self-center'><a href='" + data.items[i].link + "' target='_blank'><div class='embed-responsive embed-responsive-16by9 bg-light border' style='background-image: url(&apos;" + data.items[i].thumbnail + "&apos;); background-size: cover; background-repeat: no-repeat;'></div></a></div>" + "<div class='col-lg-8 align-self-center'><h3 class='mt-0 h4'><a href='" + data.items[i].link + "' target='_blank'>" + data.items[i].title + "</a></h3><p class='mb-2'>" + data.items[i].description + "</p><p class='text-secondary my-0'><small>" + dateConverter + "</small></p></div></div>";
+}
+	document.getElementById("rss-content").innerHTML = feedItem;
+document.getElementById("feed-title").innerHTML = data.feed.title;
+document.getElementById("feed-button").innerHTML = "<a href='" + data.feed.link + "' target='_blank' class='btn btn-primary d-block w-100 '><strong>Visit " + data.feed.title + "</strong></a>";
+        console.log (dateNumber);
+
+})
+</script>
+          <script
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
