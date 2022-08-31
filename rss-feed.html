@@ -36,7 +36,8 @@ var feedItem = "";
 for (i = 0; i < 10; i++)
 {   
     var dateOptions = {year: 'numeric', month: 'long', day: 'numeric',};
-    var toDate = new Date (data.items[i].pubDate);
+    var fixDate = data.items[i].pubDate.replace(/-/g, "/")
+    var toDate = new Date (fixDate);
     var dateConverter = toDate.toLocaleDateString('en-US', dateOptions);
 
     feedItem += "<div class='row mb-5 mb-lg-4'><div class='col-lg-4 mb-2 mb-lg-0 align-self-center'><a href='" + data.items[i].link + "' target='_blank'><div class='embed-responsive embed-responsive-16by9 bg-light border' style='background-image: url(&apos;" + data.items[i].thumbnail + "&apos;); background-size: cover; background-repeat: no-repeat;'></div></a></div>" + "<div class='col-lg-8 align-self-center'><h3 class='mt-0 h4'><a href='" + data.items[i].link + "' target='_blank'>" + data.items[i].title + "</a></h3><p class='mb-2'>" + data.items[i].description + "</p><p class='text-secondary my-0'><small>" + dateConverter + "</small></p></div></div>";
